@@ -195,35 +195,71 @@ const Home = () => {
       {/* ORGANISERS */}
       <div className="partners-container" id="partners">
         <h2 className="partners-title highlight-text-dark">Our Organisers</h2>
-        <ul className="partner-list">
-          <li>
-            <div className="partner-info">
-              <img src="/res/images/partners/aditya pandey.jpg" alt="TPHLogo" className="partner-logo" />
-              <div className="partner-details">
-                <p className="partner-description"><strong>ADITYA PANDEY</strong>.</p>
-                <p className="chapter-lead">INSTAGRAM ID  <a href="https://www.instagram.com/adityapandey9126?igsh=MXMyc3o4dHBoZW9tOQ==" target="_blank">adityapandey9126 <i className="fab fa-instagram" style={{ padding: '0 2.5px' }}></i></a></p>
+        <div className="organizers-grid">
+          <div className="organizer-card">
+            <a href="https://www.instagram.com/adityapandey9126?igsh=MXMyc3o4dHBoZW9tOQ==" target="_blank" className="organizer-link">
+              <div className="organizer-image-container">
+                <img src="/res/images/partners/aditya pandey.jpg" alt="Aditya Pandey" className="organizer-image" />
+                <div className="organizer-overlay">
+                  <h3 className="organizer-name">ADITYA PANDEY</h3>
+                  <p className="organizer-phone">9074111184</p>
+                  <div className="instagram-icon">
+                    <i className="fab fa-instagram"></i>
+                  </div>
+                </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <div className="partner-info">
-              <img src="/res/images/partners/WhatsApp Image 2024-04-13 at 13.48.53_7b16daa9.jpg" alt="MDD Logo" className="partner-logo" />
-              <div className="partner-details">
-                <p className="partner-description"><strong>ABHI SAGAR</strong>Mob No. 9074111184</p>
-                <p className="chapter-lead">INSTAGRAM ID <a href="https://www.instagram.com/abhi_sagar_17/?igsh=Z203d2g3dTgzcGwx" target="_blank">abhi_sagar_17 <i className="fab fa-instagram" style={{ padding: '0 2.5px' }}></i></a></p>
+            </a>
+          </div>
+          
+          
+          
+          <div className="organizer-card">
+            <a href="https://www.instagram.com/anwarkhan224679?igsh=MTM2Z3h1ZzBla256aw==" target="_blank" className="organizer-link">
+              <div className="organizer-image-container">
+                <img src="/res/images/partners/WhatsApp Image 2024-04-13 at 12.57.59_ea3b1001.jpg" alt="Anwar Khan" className="organizer-image" />
+                <div className="organizer-overlay">
+                  <h3 className="organizer-name">ANWAR KHAN</h3>
+                  <p className="organizer-phone">8770176369</p>
+                  <div className="instagram-icon">
+                    <i className="fab fa-instagram"></i>
+                  </div>
+                </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <div className="partner-info">
-              <img src="/res/images/partners/WhatsApp Image 2024-04-13 at 12.57.59_ea3b1001.jpg" alt="Crewsphere Logo" className="partner-logo" />
-              <div className="partner-details">
-                <p className="partner-description"><strong>ANWAR KHAN</strong> Mob No. 8770176369</p>
-                <p className="chapter-lead">INSTAGRAM ID  <a href="https://www.instagram.com/anwarkhan224679?igsh=MTM2Z3h1ZzBla256aw==" target="_blank">anwarkhan224679<i className="fab fa-instagram" style={{ padding: '0 2.5px' }}></i></a></p>
+            </a>
+          </div>
+
+          <div className="organizer-card">
+            <a href="https://www.instagram.com/milesmaker_?__pwa=1" target="_blank" className="organizer-link">
+              <div className="organizer-image-container">
+                <img src="/res/images/partners/org4.jpg" alt="Piyush Pandey" className="organizer-image" />
+                <div className="organizer-overlay">
+                  <h3 className="organizer-name">PIYUSH PANDEY</h3>
+                  <p className="organizer-phone">7047786666</p>
+                  <div className="instagram-icon">
+                    <i className="fab fa-instagram"></i>
+                  </div>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </a>
+          </div>
+
+          <div className="organizer-card">
+            <a href="https://www.instagram.com/abhi_sagar_17/?igsh=Z203d2g3dTgzcGwx" target="_blank" className="organizer-link">
+              <div className="organizer-image-container">
+                <img src="/res/images/partners/WhatsApp Image 2024-04-13 at 13.48.53_7b16daa9.jpg" alt="Abhi Sagar" className="organizer-image" />
+                <div className="organizer-overlay">
+                  <h3 className="organizer-name">ABHI SAGAR</h3>
+                  <p className="organizer-phone">9074111184</p>
+                  <div className="instagram-icon">
+                    <i className="fab fa-instagram"></i>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+
+        </div>
       </div>
     </div>
   );
