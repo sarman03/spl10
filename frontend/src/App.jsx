@@ -4,6 +4,7 @@ import './App.css'
 import Home from './components/Home'
 import JuniorRegistration from './components/JuniorRegistration'
 import SeniorRegistration from './components/SeniorRegistration'
+import TeamRegistration from './components/TeamRegistration'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/junior-registration" element={<JuniorRegistration />} />
         <Route path="/senior-registration" element={<SeniorRegistration />} />
+        <Route path="/team-registration" element={<TeamRegistration />} />
       </Routes>
     </Router>
   )

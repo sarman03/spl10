@@ -2,23 +2,16 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const SeniorRegistration = () => {
+const TeamRegistration = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullname: '',
-    mobilenumber: '',
-    dob: '',
-    email: '',
-    passportpic: null,
-    aadhaar: null,
-    role: '',
-    batting: '',
-    bowling: '',
-    battingOrder: '',
+    teamName: '',
+    teamOwner: '',
+    ownerMobile: '',
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const amount = 420; // Registration fee amount in INR (hardcoded)
+  const amount = 1; // Registration fee amount in INR (hardcoded)
 
   useEffect(() => {
     // Add the CSS link to the head
@@ -28,7 +21,7 @@ const SeniorRegistration = () => {
     document.head.appendChild(link);
 
     // Set the title
-    document.title = 'Senior Registration Form';
+    document.title = 'Team Registration Form';
 
     // Load Razorpay script
     const razorpayScript = document.createElement('script');
@@ -79,9 +72,10 @@ const SeniorRegistration = () => {
   // Function to initiate Razorpay payment
   const initiatePayment = async () => {
     try {
-      // Get Razorpay key from backend
-
-      const apiUrl = import.meta.env.VITE_API_URL
+      // Replace all instances of http://localhost:4000 with:
+      const apiUrl = import.meta.env.VITE_API_URL;
+      
+      // For example:
       const { data: { key } } = await axios.get(`${apiUrl}/api/getkey`);
       
       // Create order on backend
@@ -95,7 +89,7 @@ const SeniorRegistration = () => {
         amount: order.amount,
         currency: "INR",
         name: "SPL Cricket Tournament",
-        description: "Senior Registration Fee",
+        description: "Team Registration Fee",
         order_id: order.id,
         handler: async function (response) {
           try {
@@ -123,9 +117,8 @@ const SeniorRegistration = () => {
           }
         },
         prefill: {
-          name: formData.fullname,
-          email: formData.email,
-          contact: formData.mobilenumber
+          name: formData.teamOwner,
+          contact: formData.ownerMobile
         },
         notes: {
           address: "SPL Cricket Tournament Office"
@@ -154,36 +147,23 @@ const SeniorRegistration = () => {
   // Function to submit data to Google Sheets
   const submitToGoogleSheets = async (paymentId) => {
     // Create an object to store form data
-    const dataForSheets = {};
-    
-    // Process form data including file uploads
-    for (const key in formData) {
-      if (formData[key] instanceof File && formData[key]) {
-        // For file inputs, convert to base64
-        try {
-          const base64Data = await convertFileToBase64(formData[key]);
-          dataForSheets[key] = base64Data.split(',')[1]; // Remove the data:image/jpeg;base64, part
-        } catch (error) {
-          console.error(`Error converting ${key} to base64:`, error);
-        }
-      } else {
-        // For regular inputs
-        dataForSheets[key] = formData[key];
-      }
-    }
-    
-    // Add payment ID to the data
-    dataForSheets.paymentId = paymentId;
+    const dataForSheets = {
+      teamName: formData.teamName,
+      teamOwner: formData.teamOwner,
+      ownerMobile: formData.ownerMobile,
+      paymentId: paymentId
+    };
     
     try {
-      // Submit to Google Sheets - Note: You might want to use a different Google Sheet for seniors
-      const response = await fetch("https://script.google.com/macros/s/AKfycbwd146VzhI3nm-8nZc4XgSyHbCVKHPt7ViC0atC2BPgFKiTy4vAy8a2CUPaArX9etV0fg/exec", {
+      // Submit to Google Sheets - Replace with your new Web App URL
+      const response = await fetch("https://script.google.com/macros/s/AKfycbwIlBCp-Py93EV2jLLzwrq5ZiTI7gERh54-mZYUHE_9DgQ6-z0BAiwlOCjHJXIRH9b6/exec", {
         method: "POST",
         body: new URLSearchParams(dataForSheets),
+        mode: 'no-cors' // Important for cross-origin requests
       });
       
-      const result = await response.text();
-      console.log('Google Sheets submission result:', result);
+      console.log('Google Sheets submission completed');
+      return true;
     } catch (error) {
       console.error('Error submitting to Google Sheets:', error);
       throw error;
@@ -212,126 +192,37 @@ const SeniorRegistration = () => {
         <img src="/res/backdrop/logo.png" alt="Logo" className="logo" />
       </div>
       <div className="form-container">
-        <h2>Senior Registration Form</h2>
+        <h2>Team Registration Form</h2>
         <form id="registrationForm" onSubmit={handleSubmit} encType="multipart/form-data">
-          <label htmlFor="fullname">Full Name:</label>
+          <label htmlFor="teamName">Team Name:</label>
           <input 
             type="text" 
-            id="fullname" 
-            name="fullname" 
-            value={formData.fullname}
+            id="teamName" 
+            name="teamName" 
+            value={formData.teamName}
             onChange={handleChange}
             required 
           />
           
-          <label htmlFor="mobilenumber">Mobile Number:</label>
+          <label htmlFor="teamOwner">Team Owner:</label>
+          <input 
+            type="text" 
+            id="teamOwner" 
+            name="teamOwner" 
+            value={formData.teamOwner}
+            onChange={handleChange}
+            required 
+          />
+          
+          <label htmlFor="ownerMobile">Owner Mobile Number:</label>
           <input 
             type="tel" 
-            id="mobilenumber" 
-            name="mobilenumber" 
-            value={formData.mobilenumber}
+            id="ownerMobile" 
+            name="ownerMobile" 
+            value={formData.ownerMobile}
             onChange={handleChange}
             required 
           />
-          
-          <label htmlFor="dob">Date of Birth:</label>
-          <input 
-            type="date" 
-            id="dob" 
-            name="dob" 
-            value={formData.dob}
-            onChange={handleChange}
-            required 
-          />
-
-          <label htmlFor="email">Email:</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            value={formData.email}
-            onChange={handleChange}
-            required 
-          />
-
-          <label htmlFor="passportpic">Passport Size Pic:</label>
-          <input 
-            type="file" 
-            id="passportpic" 
-            name="passportpic" 
-            onChange={handleChange}
-            accept="image/*" 
-            required 
-          />
-
-          <label htmlFor="aadhaar">Aadhaar Card:</label>
-          <input 
-            type="file" 
-            id="aadhaar" 
-            name="aadhaar" 
-            onChange={handleChange}
-            accept="image/*,application/pdf" 
-            required 
-          />
-
-          <label htmlFor="role">Playing Role:</label>
-          <select 
-            id="role" 
-            name="role" 
-            value={formData.role}
-            onChange={handleChange}
-            required
-          >
-            <option value="bowler">Bowler</option>
-            <option value="batsman">Batsman</option>
-            <option value="wicketkeeper">Wicketkeeper</option>
-            <option value="allrounder">Allrounder</option>
-          </select>
-
-          <label htmlFor="batting">Batting (L/R):</label>
-          <select 
-            id="batting" 
-            name="batting" 
-            value={formData.batting}
-            onChange={handleChange}
-            required
-          >
-            <option value="left">Left Handed</option>
-            <option value="right">Right Handed</option>
-          </select>
-
-          <label htmlFor="bowling">Bowling Style:</label>
-          <select 
-            id="bowling" 
-            name="bowling" 
-            value={formData.bowling}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Bowling Style</option>
-            <option value="Left Arm Fast">Left Arm Fast</option>
-            <option value="Right Arm Fast">Right Arm Fast</option>
-            <option value="Left Arm Medium">Left Arm Medium</option>
-            <option value="Right Arm Medium">Right Arm Medium</option>
-            {/* <option value="Left Arm Spin">Left Arm Spin</option>
-            <option value="Right Arm Spin">Right Arm Spin</option> */}
-            <option value="None">None</option>
-          </select>
-
-          <label htmlFor="battingOrder">Preferred Batting Order:</label>
-          <select 
-            id="battingOrder" 
-            name="battingOrder" 
-            value={formData.battingOrder}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Batting Position</option>
-            <option value="opener">Opener</option>
-            <option value="topOrder">Top Order (1-3)</option>
-            <option value="middleOrder">Middle Order (4-6)</option>
-            <option value="lowerOrder">Lower Order (7-11)</option>
-          </select>
           
           <div className="button-container">
             <button 
@@ -339,7 +230,7 @@ const SeniorRegistration = () => {
               className="submit-btn" 
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Processing...' : <span>Pay & Register (₹399<span style={{ fontSize: '0.7em' }}>+GST</span>)</span>}
+              {isSubmitting ? 'Processing...' : <span>Pay & Register (₹1499<span style={{ fontSize: '0.7em' }}>+GST</span>)</span>}
             </button>
             <Link to="/" className="cancel-btn">Cancel</Link>
           </div>
@@ -349,4 +240,4 @@ const SeniorRegistration = () => {
   );
 };
 
-export default SeniorRegistration; 
+export default TeamRegistration; 
