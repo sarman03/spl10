@@ -8,7 +8,7 @@ export const app = express();
 
 // Configure CORS to allow requests from your frontend
 app.use(cors({
-  origin: 'http://localhost:5173', // Update this to match your Vite dev server port
+  origin: ['http://localhost:5173', 'https://spl10.netlify.app'], // Add your Netlify domain
   methods: ['GET', 'POST'],
   credentials: true
 }));

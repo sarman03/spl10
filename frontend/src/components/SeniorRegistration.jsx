@@ -18,7 +18,7 @@ const SeniorRegistration = () => {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const amount = 1; // Registration fee amount in INR (hardcoded)
+  const amount = 420; // Registration fee amount in INR (hardcoded)
 
   useEffect(() => {
     // Add the CSS link to the head
@@ -80,10 +80,12 @@ const SeniorRegistration = () => {
   const initiatePayment = async () => {
     try {
       // Get Razorpay key from backend
-      const { data: { key } } = await axios.get('http://localhost:4000/api/getkey');
+
+      const apiUrl = import.meta.env.VITE_API_URL
+      const { data: { key } } = await axios.get(`${apiUrl}/api/getkey`);
       
       // Create order on backend
-      const { data: { order } } = await axios.post('http://localhost:4000/api/checkout', {
+      const { data: { order } } = await axios.post(`${apiUrl}/api/checkout`, {
         amount
       });
 
@@ -330,7 +332,7 @@ const SeniorRegistration = () => {
               className="submit-btn" 
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Processing...' : 'Pay & Register (₹1)'}
+              {isSubmitting ? 'Processing...' : <span>Pay & Register (₹299<span style={{ fontSize: '0.7em' }}>+GST</span>)</span>}
             </button>
             <Link to="/" className="cancel-btn">Cancel</Link>
           </div>

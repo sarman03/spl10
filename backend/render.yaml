@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: cricket-tournament-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: RAZORPAY_API_KEY
+        sync: false
+      - key: RAZORPAY_API_SECRET
+        sync: false
+      - key: MONGO_URI
+        sync: false
