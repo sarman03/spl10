@@ -100,7 +100,7 @@ const SeniorRegistration = () => {
         handler: async function (response) {
           try {
             // Verify payment on backend
-            await axios.post('http://localhost:4000/api/paymentverification', {
+            await axios.post(`${apiUrl}/api/paymentverification`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -339,7 +339,7 @@ const SeniorRegistration = () => {
               className="submit-btn" 
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Processing...' : <span>Pay & Register (₹999<span style={{ fontSize: '0.7em' }}>+GST</span>)</span>}
+              {isSubmitting ? 'Processing...' : <span>Pay & Register (₹399<span style={{ fontSize: '0.7em' }}>+GST</span>)</span>}
             </button>
             <Link to="/" className="cancel-btn">Cancel</Link>
           </div>
