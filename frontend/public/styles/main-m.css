@@ -932,28 +932,68 @@
   .organizer-card {
     width: 100%;
     max-width: 300px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    background-color: #000;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .organizer-link {
+    text-decoration: none;
+    color: white;
+    display: block;
+  }
+
+  .organizer-image-container {
+    position: relative;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+    height: 350px;
   }
 
   .organizer-image {
-    height: 250px;
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Complete redesign of the overlay for mobile */
+  .organizer-overlay {
+    position: static;
+    background-color: #000;
+    padding: 15px;
+    color: white;
+    text-align: center;
   }
 
   .organizer-name {
     font-size: var(--fontSizes-lg);
+    margin: 0 0 5px 0;
+    font-weight: bold;
   }
 
   .organizer-phone {
-    font-size: var(--fontSizes-sm);
+    font-size: var(--fontSizes-md);
+    margin: 0;
   }
 
   .instagram-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
     width: 35px;
     height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .instagram-icon i {
     font-size: 18px;
+    color: white;
   }
 }
 }
