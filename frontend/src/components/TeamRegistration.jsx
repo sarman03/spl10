@@ -11,7 +11,7 @@ const TeamRegistration = () => {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const amount = 1; // Registration fee amount in INR (hardcoded)
+  const amount = 1798; // Registration fee amount in INR (hardcoded)
 
   useEffect(() => {
     // Add the CSS link to the head
