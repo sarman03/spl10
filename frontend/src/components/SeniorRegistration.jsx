@@ -18,7 +18,7 @@ const SeniorRegistration = () => {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const amount = 420; // Registration fee amount in INR (hardcoded)
+  const amount = 1; // Registration fee amount in INR (hardcoded)
 
   useEffect(() => {
     // Add the CSS link to the head
@@ -296,20 +296,27 @@ const SeniorRegistration = () => {
             onChange={handleChange}
             required
           >
-            <option value="left">Left</option>
-            <option value="right">Right</option>
+            <option value="left">Left Handed</option>
+            <option value="right">Right Handed</option>
           </select>
 
           <label htmlFor="bowling">Bowling Style:</label>
-          <input 
-            type="text" 
+          <select 
             id="bowling" 
             name="bowling" 
             value={formData.bowling}
             onChange={handleChange}
-            placeholder="e.g. Fast, Spin, Medium" 
-            required 
-          />
+            required
+          >
+            <option value="">Select Bowling Style</option>
+            <option value="Left Arm Fast">Left Arm Fast</option>
+            <option value="Right Arm Fast">Right Arm Fast</option>
+            <option value="Left Arm Medium">Left Arm Medium</option>
+            <option value="Right Arm Medium">Right Arm Medium</option>
+            {/* <option value="Left Arm Spin">Left Arm Spin</option>
+            <option value="Right Arm Spin">Right Arm Spin</option> */}
+            <option value="None">None</option>
+          </select>
 
           <label htmlFor="battingOrder">Preferred Batting Order:</label>
           <select 
@@ -332,7 +339,7 @@ const SeniorRegistration = () => {
               className="submit-btn" 
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Processing...' : <span>Pay & Register (₹299<span style={{ fontSize: '0.7em' }}>+GST</span>)</span>}
+              {isSubmitting ? 'Processing...' : <span>Pay & Register (₹999<span style={{ fontSize: '0.7em' }}>+GST</span>)</span>}
             </button>
             <Link to="/" className="cancel-btn">Cancel</Link>
           </div>

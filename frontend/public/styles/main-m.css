@@ -926,13 +926,13 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 0 15px;
+    padding: 0 20px;
   }
 
   .organizer-card {
     width: 100%;
     max-width: 300px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     background-color: #000;
     border-radius: 15px;
     overflow: hidden;
@@ -948,7 +948,7 @@
     position: relative;
     border-radius: 15px 15px 0 0;
     overflow: hidden;
-    height: 350px;
+    height: 370px;
   }
 
   .organizer-image {

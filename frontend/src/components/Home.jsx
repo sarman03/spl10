@@ -138,22 +138,33 @@ const Home = () => {
             <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Your payment has been processed successfully.</p>
             <p style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Payment ID: <span style={{ fontWeight: 'bold' }}>{paymentId}</span></p>
             <p style={{ fontSize: '1.2rem', marginBottom: '1.5rem' }}>Thank you for registering for the SPL Cricket Tournament!</p>
-            <button onClick={() => {
-              window.history.replaceState({}, document.title);
-              window.location.href = '/';
-            }} style={{
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              padding: '0.8rem 1.5rem',
-              borderRadius: '5px',
-              fontSize: '1.1rem',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s'
-            }} onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'} 
-               onMouseOut={(e) => e.target.style.backgroundColor = '#4CAF50'}>
-              Return to Home
-            </button>
+            
+            {/* WhatsApp Group Join Button */}
+            <a 
+              href="https://chat.whatsapp.com/D6cTv6CCK5R1KFBJoSZX7k" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={() => {
+                window.history.replaceState({}, document.title);
+              }}
+              style={{
+                display: 'block',
+                backgroundColor: '#25D366', // WhatsApp green color
+                color: 'white',
+                border: 'none',
+                padding: '0.8rem 1.5rem',
+                borderRadius: '5px',
+                fontSize: '1.1rem',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                transition: 'background-color 0.3s'
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#128C7E'} 
+              onMouseOut={(e) => e.target.style.backgroundColor = '#25D366'}
+            >
+              <i className="fab fa-whatsapp" style={{ marginRight: '8px' }}></i>
+              Join SPL WhatsApp Group
+            </a>
           </div>
         </div>
       )}
