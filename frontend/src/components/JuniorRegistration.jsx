@@ -191,12 +191,32 @@ const JuniorRegistration = () => {
     }
   };
 
+  // Function to calculate age from date of birth
+  const calculateAge = (dob) => {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    return age;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
-      // Validate form data here if needed
+      // Check age before proceeding to payment
+      const age = calculateAge(formData.dob);
+      if (age > 21) {
+        alert('Sorry, you are not eligible for junior registration. Age limit is 21 years.');
+        setIsSubmitting(false);
+        return;
+      }
       
       // Initiate payment
       await initiatePayment();
