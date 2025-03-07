@@ -11,7 +11,7 @@ const TeamRegistration = () => {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const amount = 1798; // Registration fee amount in INR (hardcoded)
+  const amount = 1590; // Registration fee amount in INR (updated to match displayed price)
 
   useEffect(() => {
     // Add the CSS link to the head
@@ -59,16 +59,6 @@ const TeamRegistration = () => {
     }
   };
 
-  // Helper function to convert File to base64
-  const convertFileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   // Function to initiate Razorpay payment
   const initiatePayment = async () => {
     try {
@@ -101,8 +91,13 @@ const TeamRegistration = () => {
               userData: formData, // Send user data along with payment verification
             });
             
-            // Submit to Google Sheets
-            await submitToGoogleSheets(response.razorpay_payment_id);
+            try {
+              // Try to submit to Google Sheets, but don't block success if it fails
+              await submitToGoogleSheets(response.razorpay_payment_id);
+            } catch (sheetsError) {
+              console.warn('Google Sheets submission error, but payment was successful:', sheetsError);
+              // Continue with success flow even if sheets submission has an error
+            }
             
             // Redirect to home page with success message
             navigate('/', { 
@@ -151,22 +146,30 @@ const TeamRegistration = () => {
       teamName: formData.teamName,
       teamOwner: formData.teamOwner,
       ownerMobile: formData.ownerMobile,
-      paymentId: paymentId
+      paymentId: paymentId,
+      timestamp: new Date().toISOString() // Add timestamp
     };
     
     try {
-      // Submit to Google Sheets - Replace with your new Web App URL
-      const response = await fetch("https://script.google.com/macros/s/AKfycbwIlBCp-Py93EV2jLLzwrq5ZiTI7gERh54-mZYUHE_9DgQ6-z0BAiwlOCjHJXIRH9b6/exec", {
+      console.log('Submitting to Google Sheets:', dataForSheets);
+      
+      // Use no-cors mode since we know it works for submitting data
+      // Replace with your Google Apps Script Web App URL
+      await fetch("https://script.google.com/macros/s/AKfycbzE5Ll94SL4VUbrEt0lrTvcoeVVaOHIeqTv01FXQtgItaV5GinltqyW4TSOEte4v3vm/exec", {
         method: "POST",
         body: new URLSearchParams(dataForSheets),
-        mode: 'no-cors' // Important for cross-origin requests
+        mode: 'no-cors'
       });
       
-      console.log('Google Sheets submission completed');
+      // Since we can't verify the response with no-cors, we'll assume it worked
+      console.log('Google Sheets submission completed (unverified)');
       return true;
     } catch (error) {
       console.error('Error submitting to Google Sheets:', error);
-      throw error;
+      // If payment was successful but sheets submission failed, 
+      // we can still consider the registration successful
+      console.log('Registration still considered successful since payment was captured');
+      return true; // Return true to continue with success flow
     }
   };
 
@@ -176,6 +179,14 @@ const TeamRegistration = () => {
     
     try {
       // Validate form data here if needed
+      if (!formData.teamName || !formData.teamOwner || !formData.ownerMobile) {
+        throw new Error('Please fill in all required fields');
+      }
+      
+      // Validate mobile number format (10 digits)
+      if (!/^\d{10}$/.test(formData.ownerMobile)) {
+        throw new Error('Please enter a valid 10-digit mobile number');
+      }
       
       // Initiate payment
       await initiatePayment();
@@ -221,6 +232,8 @@ const TeamRegistration = () => {
             name="ownerMobile" 
             value={formData.ownerMobile}
             onChange={handleChange}
+            pattern="[0-9]{10}"
+            placeholder="10-digit mobile number"
             required 
           />
           
@@ -240,4 +253,4 @@ const TeamRegistration = () => {
   );
 };
 
-export default TeamRegistration; 
+export default TeamRegistration;
