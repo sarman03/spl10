@@ -193,7 +193,7 @@ const Home = () => {
                   <div className="event-btns">
                     <Link to="/junior-registration" className="register-button">Junior<i className="fa-solid fa-up-right-from-square"></i></Link>
                     <Link to="/senior-registration" className="register-button">Senior<i className="fa-solid fa-up-right-from-square"></i></Link>
-                    <Link to="/team-registration" className="register-button">Team<i className="fa-solid fa-up-right-from-square"></i></Link>
+                    {/* <Link to="/team-registration" className="register-button">Team<i className="fa-solid fa-up-right-from-square"></i></Link> */}
                   </div>
                 </div>
               </div>
